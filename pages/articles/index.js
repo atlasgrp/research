@@ -6,6 +6,7 @@ import { XIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon, PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import ArticleCard from '../../components/Articles/ArticleCard'
+import { supabase } from '../../lib/supabaseClient'
 
 export default function ArticlesIndex() {
 
@@ -173,7 +174,7 @@ export default function ArticlesIndex() {
                             <div className="mt-6 lg:mt-0 lg:col-span-2 xl:col-span-3">
                                 <div className = 'grid grid-cols-1 sm:gap-4 sm:grid-cols-2'>
                                     {articles.map((article)=>(
-                                        <ArticleCard article = {article}/>
+                                        <ArticleCard article = {article} key = {article.title}/>
                                     ))}
                                 </div>
                             </div>

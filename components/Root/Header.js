@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { MenuIcon, QuestionMarkCircleIcon, SearchIcon, ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
+import { supabase } from '../../lib/supabaseClient'
 
 const currencies = ['All Markets', 'NASDAQ', 'NYSE', 'OTC']
 
@@ -14,6 +15,9 @@ function classNames(...classes) {
 export default function Example() {
   const [open, setOpen] = useState(false)
   
+  // Check if a user is logged in.
+  const user = supabase.auth.user()
+
   const router = useRouter()
   const path = router.pathname
   
@@ -87,20 +91,35 @@ export default function Example() {
               </div>
 
               <div className="border-t border-gray-200 py-6 px-4 space-y-6">
+                {user ? 
+                
                 <div className="flow-root">
-                  <Link href = 'register'>
-                    <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
-                        Create an account
-                    </a>
-                  </Link>
+                    <Link href = '/app'>
+                        <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
+                            Your Dashboard
+                        </a>
+                    </Link>
                 </div>
-                <div className="flow-root">
-                  <Link href = 'login'>
-                    <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
-                        Sign in
-                    </a>
-                  </Link>
-                </div>
+            
+                :
+                
+                <>
+                    <div className="flow-root">
+                    <Link href = 'register'>
+                        <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
+                            Create an account
+                        </a>
+                    </Link>
+                    </div>
+                    <div className="flow-root">
+                    <Link href = 'login'>
+                        <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
+                            Sign in
+                        </a>
+                    </Link>
+                    </div>
+                </>
+                }
               </div>
 
               <div className="border-t border-gray-200 py-6 px-4 space-y-6">
@@ -189,12 +208,30 @@ export default function Example() {
               </form>
 
               <div className="flex items-center space-x-6">
-                <a href="#" className="text-sm font-medium text-white hover:text-gray-100">
-                  Sign in
-                </a>
-                <a href="#" className="text-sm font-medium text-white hover:text-gray-100">
-                  Create an account
-                </a>
+                {
+                    user ?
+
+                    <Link href = '/app'>
+                        <a href="#" className="text-sm font-medium text-white hover:text-gray-100">
+                        Your Dashboard
+                        </a>
+                    </Link>
+
+                    :
+
+                    <>
+                        <Link href = '/login'>
+                            <a href="#" className="text-sm font-medium text-white hover:text-gray-100">
+                            Sign in
+                            </a>
+                        </Link>
+                        <Link href = '/register'>
+                            <a href="#" className="text-sm font-medium text-white hover:text-gray-100">
+                            Create an account
+                            </a>
+                        </Link>
+                    </>
+                }
               </div>
             </div>
           </div>
