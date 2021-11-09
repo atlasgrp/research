@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function ArticleCard({article}) {
     return (
         <div key={article.title} className = 'border border-gray-400 p-6 rounded-lg'>
@@ -12,9 +14,11 @@ export default function ArticleCard({article}) {
             <p className="mt-3 text-base text-gray-500">{article.description}</p>
             </a>
             <div className="mt-3">
-                <a href={article.href} className="text-base font-semibold text-indigo-600 hover:text-indigo-500">
-                    Read full story &rarr;
-                </a>
+                <Link href = {"/articles/" + article.id}>
+                    <a href={article.href} className="cursor-pointer text-base font-semibold text-indigo-600 hover:text-indigo-500">
+                        Read full story &rarr;
+                    </a>
+                </Link>
             </div>
         </div>
     )

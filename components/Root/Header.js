@@ -21,7 +21,7 @@ export default function Example() {
   const router = useRouter()
   const path = router.pathname
   
-  let releases, articles, companies = false
+  let releases, articles, companies, home = false
   
   if (path == '/releases') {
     releases = true
@@ -29,16 +29,18 @@ export default function Example() {
     articles = true
   } else if (path == '/companies') {
     companies = true
+  } else if (path == '/') {
+    home = true
   }
 
   const navigation = {
     pages: [
-        { name: 'Press Releases', href: '/releases', current: releases },
-        { name: 'Articles', href: '/articles', current: articles },
-        { name: 'Companies', href: '/companies', current: companies },
+      { name: 'Home', href: '/', current: home },
+      { name: 'Press Releases', href: '/releases', current: releases },
+      { name: 'Articles', href: '/articles', current: articles },
+      { name: 'Companies', href: '/companies', current: companies },
     ],
   }
-
 
   return (
     <div className="bg-white">
@@ -94,9 +96,12 @@ export default function Example() {
                 {user ? 
                 
                 <div className="flow-root">
+                    <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
+                      Sign Out
+                    </a>
                     <Link href = '/app'>
                         <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
-                            Your Dashboard
+                          Your Dashboard
                         </a>
                     </Link>
                 </div>
@@ -211,11 +216,13 @@ export default function Example() {
                 {
                     user ?
 
-                    <Link href = '/app'>
+                    <>
+                      <Link href = '/app'>
                         <a href="#" className="text-sm font-medium text-white hover:text-gray-100">
                         Your Dashboard
                         </a>
-                    </Link>
+                      </Link>
+                    </>
 
                     :
 
@@ -244,10 +251,10 @@ export default function Example() {
                   {/* Logo (lg+) */}
                   <div className="hidden lg:flex-1 lg:flex lg:items-center">
                     <a href="#">
-                      <span className="sr-only">Workflow</span>
+                      <span className="sr-only">Atlas</span>
                       <img
                         className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                        src="/Atlas.png"
                         alt=""
                       />
                     </a>
@@ -259,7 +266,7 @@ export default function Example() {
                       <div className="h-full flex justify-center space-x-8">
 
                         {navigation.pages.map((page) => (
-                          <Link href = {page.href}>
+                          <Link href = {page.href} key = {page.href}>
                                 <a
                                     key={page.name}
                                     href={page.href}
@@ -293,9 +300,9 @@ export default function Example() {
 
                   {/* Logo (lg-) */}
                   <a href="#" className="lg:hidden">
-                    <span className="sr-only">Workflow</span>
+                    <span className="sr-only">Atlas</span>
                     <img
-                      src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                      src="/Atlas.png"
                       alt=""
                       className="h-8 w-auto"
                     />
@@ -306,15 +313,20 @@ export default function Example() {
 
                     <div className="flex items-center lg:ml-8">
                       {/* Help */}
-                      <a href="#" className="p-2 text-gray-400 hover:text-gray-500 lg:hidden">
-                        <span className="sr-only">Help</span>
-                        <QuestionMarkCircleIcon className="w-6 h-6" aria-hidden="true" />
-                      </a>
-                      <a href="#" className="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">
-                        Help
-                      </a>
+                      <Link href = '/help'>
+                        <a href="#" className="p-2 text-gray-400 hover:text-gray-500 lg:hidden">
+                          <span className="sr-only">Help</span>
+                          <QuestionMarkCircleIcon className="w-6 h-6" />
+                        </a>
+                      </Link>
+                      <Link href = '/help'>
+                        <a href="#" className="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">
+                          Help
+                        </a>
+                      </Link>
 
                       {/* Cart */}
+                      
                     </div>
                   </div>
                 </div>
