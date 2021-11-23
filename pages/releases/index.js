@@ -44,7 +44,7 @@ export function SearchBox({ currentRefinement, isSearchStalled, refine }) {
                 type="search"
                 value={currentRefinement}
                 onChange={event => refine(event.currentTarget.value)}
-                placeholder = "Search for a company by ticker or name"
+                placeholder = "Search for a company, title, or description of a press release."
                 className = "block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
             </div>
@@ -65,19 +65,23 @@ const Hits = ({ hits }) => (
                 <div className = 'flex items-center'>
                     <div className="flex-1 min-w-0 ml-4">
                         <div href="#" className="focus:outline-none">
-                            <p className="text-sm font-medium text-gray-900">{hit.title} (${hit.ticker})</p>
-                            <p className="text-sm text-gray-500 w-3/4">{hit.date} | {hit.type}</p>
+                            <p className="text-sm font-medium text-gray-900 flex">{hit.title}
+                                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    {hit.subject}
+                                </span>
+                            </p>
+                            <p className="text-sm text-gray-500 w-3/4">{hit.pubDate} | {hit.contributor}</p>
                         </div>
+                        <div className="text-sm text-gray-500 w-2/3" dangerouslySetInnerHTML={{ __html: hit.description }} />
                     </div>
                 </div>
-                <Link href = {'/releases/' + hit.id}>
-                    <button
-                        type="button"
-                        className="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Read More &rarr;
-                    </button>
-                </Link>
+                <a 
+                    href = {hit.link} 
+                    target="_blank"
+                    className="flex-shrink-0 cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Read More &rarr;
+                </a>
             </div>
         ))}
         </div>
