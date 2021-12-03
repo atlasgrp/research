@@ -18,7 +18,9 @@ export default function Article() {
     const fetchId = async () => {
         const { id } = router.query;
 
-        return id
+        setTimeout(() => {
+            return id
+        }, 1000);
     }
 
     const fetchArticle = async () => {
