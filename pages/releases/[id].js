@@ -18,29 +18,33 @@ export default function Article() {
     const fetchId = async () => {
         const { id } = router.query;
 
-        setTimeout(() => {
-            return id
-        }, 1000);
+        return id
     }
 
     const fetchArticle = async () => {
 
-        const id = await fetchId();
+        const { id } = router.query;
 
-        const { data, error } = await supabase.from('releases').select(`
-            contributor,
-            subject,
-            articleText,
-            link,
-            modified,
-            title
-        `).eq('identifier', id ?? 1)
-        
-        if (error) {
-            alert(error.message)
+        if (id) {
+            const { data, error } = await supabase.from('releases').select(`
+                contributor,
+                subject,
+                articleText,
+                link,
+                modified,
+                title
+            `).eq('identifier', id ?? 1)
+            
+            if (error) {
+                alert(error.message)
+            } else {
+                setArticle(data[0])
+                setLoading(false)
+            }
         } else {
-            setArticle(data[0])
-            setLoading(false)
+            setTimeout(() => {
+                fetchArticle()
+            }, 1000)
         }
 
     }
