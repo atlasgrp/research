@@ -254,7 +254,7 @@ export default function Example() {
                       <span className="sr-only">Atlas</span>
                       <img
                         className="h-8 w-auto"
-                        src="/Atlas.png"
+                        src="/atlas.png"
                         alt=""
                       />
                     </a>
@@ -302,7 +302,7 @@ export default function Example() {
                   <a href="#" className="lg:hidden">
                     <span className="sr-only">Atlas</span>
                     <img
-                      src="/Atlas.png"
+                      src="/atlas.png"
                       alt=""
                       className="h-8 w-auto"
                     />
