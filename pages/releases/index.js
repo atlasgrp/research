@@ -63,7 +63,7 @@ const Hits = ({ hits }) => (
                 className="hidden sm:show mb-4 sm:justify-between sm:relative sm:rounded-lg sm:border border-gray-300 bg-white px-6 py-5 shadow-sm sm:flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
             >
                 <div className = 'flex items-center'>
-                    <div className="flex-1 sm:min-w-0 ml-4">
+                    <div className="flex-1 sm:min-w-0 sm:ml-4">
                         <div href="#" className="focus:outline-none">
                             <p className="text-sm font-medium text-gray-900 flex sm:flex-row flex-col">
                                 {hit.title}
@@ -85,33 +85,27 @@ const Hits = ({ hits }) => (
                 </a>
             </div>
 
-            <div
-                
-                className="sm:hidden show mb-4 justify-between relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm sm:flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+            <Link
+                href = {'/releases/' + hit.identifier}
             >
-                <div className = 'flex items-center'>
-                    <div className="flex-1 sm:min-w-0 ml-4">
-                        <div href="#" className="focus:outline-none">
-                            <p className="text-sm font-medium text-gray-900 flex sm:flex-row flex-col">
-                                {hit.title}
-                                
-                            </p>
-                            <span className="mt-2 mb-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {hit.subject}
-                            </span>
-                            <p className="text-sm text-gray-500 w-3/4">{hit.pubDate} | {hit.contributor}</p>
+                <div className="cursor-pointer sm:hidden show mb-4 justify-between relative rounded-lg border border-gray-300 bg-white px-3 py-5 shadow-sm sm:flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                    <div className = 'flex items-center'>
+                        <div className="flex-1 sm:min-w-0 mx-2">
+                            <div href="#" className="focus:outline-none">
+                                <p className="text-sm font-medium text-gray-900 flex sm:flex-row flex-col">
+                                    {hit.title}
+                                    
+                                </p>
+                                <span className="mt-2 mb-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    {hit.subject}
+                                </span>
+                                <p className="text-sm text-gray-500 w-3/4">{hit.pubDate} | {hit.contributor}</p>
+                            </div>
+                            <div className="text-sm text-gray-500" dangerouslySetInnerHTML={{ __html: hit.description }} />
                         </div>
-                        <div className="text-sm text-gray-500 w-2/3" dangerouslySetInnerHTML={{ __html: hit.description }} />
                     </div>
                 </div>
-                <a 
-                    href = {'/releases/' + hit.identifier} 
-                    rel="noreferrer"
-                    className="flex-shrink-0 mt-2 cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Read More &rarr;
-                </a>
-            </div>
+            </Link>
             </div>
         ))}
         <div className = 'flex w-full justify-center'>

@@ -76,7 +76,7 @@ const Hits = ({ hits }) => (
                 <Link href = {'/companies/' + hit.ticker}>
                     <button
                         type="button"
-                        className="w-1/4 cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="w-1/4 cursor-pointer inline-flex items-center text-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         View {hit.ticker} &rarr;
                     </button>

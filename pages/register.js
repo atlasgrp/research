@@ -26,7 +26,7 @@ export default function Register() {
             setError(error.message)
             setLoading(false)
         } else {
-            const { data, error } = await supabase.from('profiles').insert([{ id: user.id }])
+            const { data, error } = await supabase.from('profiles').insert([{ id: user.id, set_up: false }])
             if (error) {
               setError(error.message)
             } else {

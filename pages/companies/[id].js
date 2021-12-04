@@ -12,27 +12,47 @@ import Head from 'next/head';
 export default function CompanyPage() {
 
     const router = useRouter()
-    const { id } = router.query
     const [loading, setLoading] = useState(true)
     const [company, setCompany] = useState([])
+    const [followers, setFollowingCount] = useState(0)
+    const { id } = router.query
 
     const getCompany = async () => {
-        const { data, error } = await supabase
-            .from('tickers')
-            .select()
-            .eq('ticker', id)
         
-        if (error) {
-            console.log(error)
+        if (id != null) {
+            const { data, error } = await supabase
+                .from('tickers')
+                .select()
+                .eq('ticker', id)
+            
+            if (error) {
+                console.log(error)
+            } else {
+                setCompany(data[0])
+                
+                const { response, error } = await supabase
+                    .from('followers')
+                    .select()
+                    .eq('company', data[0].id)
+
+                if (error) {
+                    console.log(error)
+                } else {
+                    setFollowingCount(data.length)
+                }
+            
+                setLoading(false)
+            }
         } else {
-            setCompany(data[0])
-            setLoading(false)
+            setTimeout(() => {
+                getCompany()
+            }, 1000)
         }
     }
 
     useEffect(() => {
         getCompany()
-    }, [])
+    }, [id])
 
     return (
         <div>
@@ -53,8 +73,8 @@ export default function CompanyPage() {
                     <TitleHeader title = {company.name} />
                     <div className = 'pl-6 pr-6 pt-12 sm:pl-12 sm:pr-12'>
                         <div className = 'flex justify-between items-center'>
-                            <IntroPanel company = {company}/>
-                            <FollowButton company = {company} />
+                            <IntroPanel company = {company} followers = {followers}/>
+                            <FollowButton company = {company} followers = {followers} setFollowingCount = {setFollowingCount}/>
                         </div>
                     </div>
                 </div>
@@ -65,7 +85,7 @@ export default function CompanyPage() {
 }
 
 
-export function IntroPanel({company}) {
+export function IntroPanel({company, followers, setFollowingCount}) {
     return (
       <div className="flex items-center">
         <div className="mr-4 flex-shrink-0 self-center">
@@ -76,12 +96,15 @@ export function IntroPanel({company}) {
           <p className="mt-1">
             {company.description}
           </p>
+          <p className="mt-1">
+            {followers} Followers
+          </p>
         </div>
       </div>
     )
   }
   
-export const FollowButton = ({company}) => {
+export const FollowButton = ({company, followers, setFollowingCount}) => {
 
     const [following, setFollowing] = useState(true)
 
@@ -101,6 +124,7 @@ export const FollowButton = ({company}) => {
             setFollowing(false)
         } else {
             setFollowing(true)
+            setFollowingCount(followers + 1)
         }
     }
 
@@ -117,6 +141,7 @@ export const FollowButton = ({company}) => {
             console.log(error)
             alert(error.message)
         } else {
+            setFollowingCount(followers - 1)
             setFollowing(false)
         }
     }
